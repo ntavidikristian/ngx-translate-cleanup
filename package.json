@@ -1,0 +1,22 @@
+{
+  "name": "@kntavidi/ngx-translate-cleanup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node ./dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cli-color": "^2.0.4",
+    "glob": "^11.0.0",
+    "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "@types/readline-sync": "^1.4.8",
+    "typescript": "^5.6.2"
+  }
+}
