@@ -31,10 +31,11 @@ function keysThatAreUsedInFile(filePath: string, listOfKeysToSearchFor: string[]
     return keysIncluded;
 }
 
-function keysNotUsedInProject(listOfKeysToSearchFor: string[], projectPath: string): string[] {
+function keysNotUsedInProject(listOfKeysToSearchFor: string[], projectPath: string, includeFiles: string[]): string[] {
 
     let keysNotFoundInTheProject = listOfKeysToSearchFor;
-    const files = glob.sync(`${projectPath}/**/{*.html,*.ts}`, { nodir: true });
+    const pattern = `${projectPath}/**/{${includeFiles?.map(x => `*.${x}`).join(',')}}`
+    const files = glob.sync(pattern, { nodir: true });
     for (const file of files) {
         const keysUsed = keysThatAreUsedInFile(file, keysNotFoundInTheProject);
         keysNotFoundInTheProject = keysNotFoundInTheProject.filter(key => !keysUsed.includes(key));

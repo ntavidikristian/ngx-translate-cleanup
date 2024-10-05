@@ -1,8 +1,7 @@
 export interface CleanerConfiguration {
     projectPath: string;
     translationFilesPath: string;
-    includeFiles?: string[],
-    overwriteFiles?: boolean,
+    includeFiles: string[],
     outPath: string;
 }
 
@@ -11,7 +10,6 @@ export namespace CleanerConfiguration {
         projectPath: 'src/app',
         translationFilesPath: 'src/assets/i18n',
         includeFiles: ['html', 'ts'],
-        overwriteFiles: false,
         outPath: 'src/assets/i18n-cleaned',
     })
 }

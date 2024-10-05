@@ -53,7 +53,7 @@ const stats = cleanupTasks.map(
     task => {
         Logger.info(`Checking file ${task.fileName}`);
         const allKeys = Utils.extractKeys(task.sourceTranslation);
-        const unusedKeys = Utils.keysNotUsedInProject(allKeys, configuration.projectPath);
+        const unusedKeys = Utils.keysNotUsedInProject(allKeys, configuration.projectPath, configuration.includeFiles);
         Utils.buildTranslation(task.sourceTranslation, '', task.cleanedTranslation, new Set(unusedKeys));
 
         const keysInNewJSON = Utils.extractKeys(task.cleanedTranslation);
@@ -79,38 +79,56 @@ if (!fs.existsSync(outPath)) {
 }
 
 
-if (!configuration.overwriteFiles) {
-    cleanupTasks.forEach(
-        task => {
-            fs.writeFileSync(
-                path.join(outPath, task.fileName),
-                JSON.stringify(task.cleanedTranslation, null, 2)
-            )
-        }
-    )
-} else {
 
-}
-
-
-// * write log
-
-fs.writeFileSync(
-    path.join(
-        outPath,
-        `__cleanup-log__${new Date().toJSON()}.txt`
-    ),
-
-    stats.reduce(
-        (aggr, current) => `
-${aggr}
-${current.task.fileName}
-removed Keys: ${current.unusedKeys.length}
-${current.unusedKeys.join('\n')}
-`, ''
-    )
-
+cleanupTasks.forEach(
+    task => {
+        fs.writeFileSync(
+            path.join(outPath, task.fileName),
+            JSON.stringify(task.cleanedTranslation, null, 2)
+        )
+    }
 )
 
 
 
+// * write log
+
+const logPath = path.join(
+    configuration.outPath,
+    `__cleanup_logs ${new Date().toJSON()}`
+)
+
+if (!fs.existsSync(logPath)) {
+    fs.mkdirSync(logPath, { recursive: true });
+}
+
+stats.forEach(
+    stat => {
+        fs.writeFileSync(
+            path.join(
+                logPath,
+                stat.task.fileName + '__log.txt'
+            ),
+
+            `
+
+ .o88b. db      d88888b  .d8b.  d8b   db db    db d8888b.      d8888b. d88888b d8888b.  .d88b.  d8888b. d888888b 
+d8P  Y8 88      88'     d8'  8b 888o  88 88    88 88   8D      88   8D 88'     88   8D .8P  Y8. 88   8D  ~~88~~' 
+8P      88      88ooooo 88ooo88 88V8o 88 88    88 88oodD'      88oobY' 88ooooo 88oodD' 88    88 88oobY'    88    
+8b      88      88~~~~~ 88~~~88 88 V8o88 88    88 88~~~        88 8b   88~~~~~ 88~~~   88    88 88 8b      88    
+Y8b  d8 88booo. 88.     88   88 88  V888 88b  d88 88           88  88. 88.     88       8b  d8' 88  88.    88    
+  Y88P' Y88888P Y88888P YP   YP VP   V8P ~Y8888P' 88           88   YD Y88888P 88        Y88P'  88   YD    YP   
+
+
+********************************************
+    File: ${stat.task.fileName}
+    #Removed Keys: ${stat.unusedKeys.length}
+********************************************
+
+** List of removed Keys ***
+
+${stat.unusedKeys.join('\n')}
+`
+        )
+    }
+)
