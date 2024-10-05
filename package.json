@@ -2,12 +2,13 @@
   "name": "@kntavidi/ngx-translate-cleanup",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "private":"true",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node ./build-package.js",
     "start": "tsc && node ./dist/index.js"
   },
-  "author": "",
+  "author": "Kristian Ntavidi",
   "license": "ISC",
   "dependencies": {
     "cli-color": "^2.0.4",
