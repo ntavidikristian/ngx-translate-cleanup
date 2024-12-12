@@ -2,7 +2,7 @@ const path = require('path');
 const package = require('./package.json');
 const fs = require('fs');
 
-const { name, version, description, dependencies, license, main, author } = package;
+const { name, version, description, dependencies, license, main, author, keywords } = package;
 
 const libraryPackage = {
     name,
@@ -12,6 +12,7 @@ const libraryPackage = {
     license,
     main,
     author,
+    keywords,
     bin: {
         'cleanup-translation-files': './bin/index.js',
         [name]: './bin/index.js'
