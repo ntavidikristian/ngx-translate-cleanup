@@ -41,3 +41,11 @@ fs.writeFileSync(
     binFileContent
 )
 
+fs.writeFileSync(
+    'dist/LICENCE',
+    fs.readFileSync('LICENCE')
+)
+fs.writeFileSync(
+    'dist/README.MD',
+    fs.readFileSync('README.md')
+)
