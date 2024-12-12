@@ -13,6 +13,9 @@ const libraryPackage = {
     main,
     author,
     keywords,
+    publishConfig: {
+        access: "public"
+    },
     bin: {
         'cleanup-translation-files': './bin/index.js',
         [name]: './bin/index.js'
@@ -33,7 +36,7 @@ fs.writeFileSync(
 
 const binFileContent = `#!/usr/bin/env node
 require('${path.join('..', main)}');`
-if(!fs.existsSync('dist/bin')){
+if (!fs.existsSync('dist/bin')) {
     fs.mkdirSync('dist/bin');
 }
 fs.writeFileSync(
