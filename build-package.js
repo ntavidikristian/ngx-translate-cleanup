@@ -37,7 +37,7 @@ fs.writeFileSync(
 
 const binFileContent = `#!/usr/bin/env node
 require('${joinPath('..', main)}');`
-fsExtra.ensureDir('dist/bin');
+fsExtra.ensureDirSync('dist/bin');
 fs.writeFileSync(
     'dist/bin/index.js',
     binFileContent
