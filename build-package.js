@@ -1,6 +1,7 @@
-const path = require('path');
 const package = require('./package.json');
 const fs = require('fs');
+const joinPath = require('util.join').join;
+const fsExtra = require('fs-extra');
 
 const { name, version, description, dependencies, license, main, author, keywords } = package;
 
@@ -23,7 +24,7 @@ const libraryPackage = {
 }
 
 fs.writeFileSync(
-    path.join(
+    joinPath(
         'dist',
         'package.json'
     ),
@@ -35,10 +36,8 @@ fs.writeFileSync(
 )
 
 const binFileContent = `#!/usr/bin/env node
-require('${path.join('..', main)}');`
-if (!fs.existsSync('dist/bin')) {
-    fs.mkdirSync('dist/bin');
-}
+require('${joinPath('..', main)}');`
+fsExtra.ensureDir('dist/bin');
 fs.writeFileSync(
     'dist/bin/index.js',
     binFileContent

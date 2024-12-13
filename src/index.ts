@@ -1,11 +1,15 @@
 import * as fs from 'fs';
 import * as glob from 'glob';
 import * as path from 'path';
+
+
 import { exit } from 'process';
 import { TranslationCleanupTask } from './models/translation-cleanup-task.model';
 import { Utils } from './utils';
 import { getCleanerConfiguration } from './utils/configuration-loader';
 import { Logger } from './utils/logger';
+import { join as joinPath } from 'util.join';
+import { ensureDirSync } from 'fs-extra';
 
 
 const configuration = getCleanerConfiguration();
@@ -27,7 +31,7 @@ if (!translationsPathExists) {
 }
 
 
-const translationFilesPattern = path.join(
+const translationFilesPattern = joinPath(
     configuration.translationFilesPath,
     '*.json'
 );
@@ -74,16 +78,14 @@ const stats = cleanupTasks.map(
 )
 
 const outPath = configuration.outPath;
-if (!fs.existsSync(outPath)) {
-    fs.mkdirSync(outPath, { recursive: true });
-}
+ensureDirSync(outPath);
 
 
 
 cleanupTasks.forEach(
     task => {
         fs.writeFileSync(
-            path.join(outPath, task.fileName),
+            joinPath(outPath, task.fileName),
             JSON.stringify(task.cleanedTranslation, null, 2)
         )
     }
@@ -93,19 +95,17 @@ cleanupTasks.forEach(
 
 // * write log
 
-const logPath = path.join(
+const logPath = joinPath(
     configuration.outPath,
     `__cleanup_logs ${new Date().toJSON()}`
 )
 
-if (!fs.existsSync(logPath)) {
-    fs.mkdirSync(logPath, { recursive: true });
-}
+ensureDirSync(logPath);
 
 stats.forEach(
     stat => {
         fs.writeFileSync(
-            path.join(
+            joinPath(
                 logPath,
                 stat.task.fileName + '__log.txt'
             ),

@@ -12,12 +12,17 @@
   "license": "MIT",
   "dependencies": {
     "cli-color": "^2.0.4",
+    "fs-extra": "11.2.0",
     "glob": "^11.0.0",
-    "readline-sync": "^1.4.10"
+    "path.join": "1.0.0",
+    "readline-sync": "^1.4.10",
+    "util.join": "0.0.27"
   },
   "devDependencies": {
+    "@types/fs-extra": "11.0.4",
     "@types/node": "^22.7.4",
     "@types/readline-sync": "^1.4.8",
+    "ts-node": "10.9.2",
     "typescript": "^5.6.2"
   },
   "keywords": [
