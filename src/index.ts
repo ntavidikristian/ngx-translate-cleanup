@@ -97,7 +97,7 @@ cleanupTasks.forEach(
 
 const logPath = joinPath(
     configuration.outPath,
-    `__cleanup_logs ${new Date().toJSON()}`
+    `__cleanup_logs ${new Date().getUTCDate()}`
 )
 
 ensureDirSync(logPath);
