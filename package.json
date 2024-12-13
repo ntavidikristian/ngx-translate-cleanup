@@ -1,6 +1,6 @@
 {
   "name": "@kntavidi/ngx-translate-cleanup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool that complements the @ngx-translate/core library by simplifying the removal of unused translations in .json files.",
   "private":"true",
   "main": "index.js",
