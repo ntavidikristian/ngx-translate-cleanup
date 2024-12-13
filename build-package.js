@@ -3,7 +3,7 @@ const fs = require('fs');
 const joinPath = require('util.join').join;
 const fsExtra = require('fs-extra');
 
-const { name, version, description, dependencies, license, main, author, keywords } = package;
+const { name, version, description, dependencies, license, main, author, keywords, repository } = package;
 
 const libraryPackage = {
     name,
@@ -14,6 +14,7 @@ const libraryPackage = {
     main,
     author,
     keywords,
+    repository,
     publishConfig: {
         access: "public"
     },
